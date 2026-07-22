@@ -399,9 +399,9 @@
 	};
 };
 
-&adc0 {
+&adc1 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_adc>;
+	pinctrl-0 = <&pinctrl_adc1>;
 	vref-supply = <&reg_adc_vref_1v8>;
 	status = "okay";
 };
@@ -592,7 +592,7 @@
 			>;
 		};
 
-		pinctrl_adc0: adc0grp {
+		pinctrl_adc1: adc1grp {
 			fsl,pins = <
 				IMX8QXP_ADC_IN0_ADMA_ADC_IN0                0x00000060
                 IMX8QXP_ADC_IN1_ADMA_ADC_IN1                0x00000060
