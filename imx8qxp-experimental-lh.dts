@@ -297,20 +297,6 @@
 	status = "okay";
 };
 
-&i2c0_mipi_lvds0 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_i2c0_mipi_lvds0>;
-	clock-frequency = <100000>;
-	status = "disabled";
-};
-
-&i2c0_mipi_lvds1 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_i2c0_mipi_lvds1>;
-	clock-frequency = <100000>;
-	status = "disabled";
-};
-
 &ldb1_phy {
 	status = "disabled";
 };
@@ -334,22 +320,6 @@
 &phyx1 {
 	fsl,refclk-pad-mode = <IMX8_PCIE_REFCLK_PAD_INPUT>;
 	status = "okay";
-};
-
-&pcieb{
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_pcieb>;
-	reset-gpio = <&lsio_gpio4 0 GPIO_ACTIVE_LOW>;
-	vpcie-supply = <&reg_pcieb>;
-	ext_osc = <1>;
-	status = "disabled";
-};
-
-&sai1 {
-	#sound-dai-cells = <0>;
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_sai1>;
-	status = "disabled";
 };
 
 /****************** SPI *********************/
@@ -439,6 +409,13 @@
 &lsio_gpio0 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_gpio0>;
+
+	usb_port_select-hog {
+		gpio-hog;
+		gpios = <30 GPIO_ACTIVE_HIGH>;
+		output-low;
+		line-name = "USB port select GPIO";
+	};
 };
 
 &lsio_gpio1 {
