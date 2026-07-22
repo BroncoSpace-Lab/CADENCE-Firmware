@@ -429,48 +429,44 @@
 	};
 };
 
-&adc {
+&adc0 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_adc>;
+	vref-supply = <&reg_adc_vref_1v8>;
 	status = "okay";
 };
 
-&flexspi0 {
+&lsio_gpio0 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_qspidatalines>, <&pinctrl_selectandclk>;
-	status = "okay";
-
-	nor_flash@0 {
-		reg = <0>;
-		compatible = "jedec,spi-nor";
-		spi-max-frequency = <84000000>;
-	};
+	pinctrl-0 = <&pinctrl_gpio0>;
 };
 
-&wdog0 {
+&lsio_gpio1 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_watchdog>;
-	status = "okay";
+	pinctrl-0 = <&pinctrl_gpio1>;
 };
 
 &lsio_gpio3 {
-	nor_reset-hog {
-		gpio-hog;
-		gpios = <14 GPIO_ACTIVE_LOW>;
-		output-high;
-		line-name = "QSPI nor reset";
-	};
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_gpio3>;
+};
+
+&lsio_gpio4 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_gpio4>;
 };
 
 &iomuxc {
 	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_hog>, <&pinctrl_ebyte>, <&pinctrl_heater_trigger>, 
-				<&pinctrl_payload>, <&pinctrl_power_management>, <&pinctrl_adcs>, 
-				<&pinctrl_satnogs>, <&pinctrl_breakout_connector>, 
-				<&pinctrl_imager_load>, <&pinctrl_adcs_load_switch>, <&pinctrl_m40>;
+	pinctrl-0 = <&pinctrl_hog>;
 
 	pcm942 {
-		// 10/100/1000 Mbps Ethernet1 RGMII Interface
+		pinctrl_hog: hoggrp {
+			fsl,pins = <
+				IMX8QXP_SPI0_CS1_LSIO_GPIO1_IO07					0x06000021
+			>;
+		};
+
 		pinctrl_fec2: fec2grp {
 			fsl,pins = <
 				IMX8QXP_ESAI0_SCKR_CONN_ENET1_RGMII_TX_CTL	   		0x06000060
@@ -489,15 +485,6 @@
 			>;
 		};
 
-		// 10/100/1000 Mbps Ethernet0 Differential Interface
-		pinctrl_fec1: fec1grp {
-			fsl,pins = <
-				IMX8QXP_ENET0_MDC_CONN_ENET0_MDC            0x06000060
-                IMX8QXP_ENET0_MDIO_CONN_ENET0_MDIO          0x06000060
-			>;
-		};
-
-		// Onbord RTC, IMU sensors, Temperature sensors, power monitors
 		pinctrl_lpi2c0: lpi0cgrp {
 			fsl,pins = <
 				IMX8QXP_MIPI_CSI0_GPIO0_00_ADMA_I2C0_SCL    0x06000060
@@ -505,7 +492,6 @@
 			>;
 		};
 
-		// Electrical Power System Management Board
 		pinctrl_lpi2c1: lpi1cgrp {
 			fsl,pins = <
 				IMX8QXP_USB_SS3_TC1_ADMA_I2C1_SCL           0x06000060
@@ -513,7 +499,6 @@
 			>;
 		};
 
-		// ADCS Connection
 		pinctrl_lpi2c2: lpi2cgrp {
 			fsl,pins = <
 				IMX8QXP_MIPI_DSI1_GPIO0_00_ADMA_I2C2_SCL    0x06000060
@@ -521,7 +506,6 @@
 			>;
 		};
 
-		// Payload Board
 		pinctrl_lpi2c3: lpi3cgrp {
 			fsl,pins = <
 				IMX8QXP_CSI_EN_ADMA_I2C3_SCL                0x06000060
@@ -529,7 +513,6 @@
 			>;
 		};
 
-		// 2x MRAM
 		pinctrl_lpspi0: lpspi0grp {
 			fsl,pins = <
 				IMX8QXP_SPI0_CS0_ADMA_SPI0_CS0              0x06000020     	/* MRAM #1 */
@@ -540,7 +523,6 @@
 			>;
 		};
 
-		// SATNOGS Board & EBYTE UHF Transceiver Module
 		pinctrl_lpspi1: lpspi1grp {
 			fsl,pins = <
 				IMX8QXP_SAI0_RXD_ADMA_SPI1_CS0              0x06000020		/* SATNOGS */
@@ -551,7 +533,6 @@
 			>;
 		};
 
-		// NAND Flash & Breakout Connector
 		pinctrl_lpspi2: lpspi2grp {
 			fsl,pins = < 
 				IMX8QXP_SPI2_CS0_ADMA_SPI2_CS0              0x06000020		/* NAND Flash */
@@ -562,7 +543,6 @@
 			>;
 		};
 
-		//ADCS Connection & Breakout Connector
 		pinctrl_lpspi3: lpspi3grp {
 			fsl,pins = <
 				IMX8QXP_SPI3_CS0_ADMA_SPI3_CS0              0x06000020		/* ADCS */
@@ -573,15 +553,15 @@
 			>;
 		};
 
-		// MUXED Programming / Breakout
 		pinctrl_lpuart0: lpuart0grp {
 			fsl,pins = <
 				IMX8QXP_UART0_RX_ADMA_UART0_RX              0x06000060
                 IMX8QXP_UART0_TX_ADMA_UART0_TX              0x06000060
+				IMX8QXP_ADC_IN3_M40_UART0_TX                0x00000060
+				IMX8QXP_SCU_GPIO0_00_M40_UART0_RX           0x06000060
 			>;
 		};
 
-		// RS-422 Payloard Board Connection
 		pinctrl_lpuart1: lpuart1grp {
 			fsl,pins = <
 				IMX8QXP_UART1_RX_ADMA_UART1_RX              0x06000060
@@ -589,7 +569,6 @@
 			>;
 		};
 
-		//
 		pinctrl_lpuart1_rtscts: lpuart1rtsctsgrp {
 			fsl,pins = <
 				IMX8QXP_UART1_CTS_B_ADMA_UART1_CTS_B        0x06000060
@@ -597,7 +576,6 @@
 			>;
 		};
 
-		// GNSS / GPS Module
 		pinctrl_lpuart2: lpuart2grp {
 			fsl,pins = <
 				IMX8QXP_UART2_RX_ADMA_UART2_RX              0x06000020
@@ -605,14 +583,13 @@
 			>;
 		};
 
-		// SATNOGS S-Band Transceiver Board
 		pinctrl_lpuart3: lpuart3grp {
 			fsl,pins = <
 				IMX8QXP_FLEXCAN2_RX_ADMA_UART3_RX           0x06000060
                 IMX8QXP_FLEXCAN2_TX_ADMA_UART3_TX           0x06000060
 			>;
 		};
-		// FLEXCAN1 SATNOGS S-Band Transceiver Board
+
 		pinctrl_flexcan1: flexcan1grp {
 			fsl,pins = <
 				IMX8QXP_FLEXCAN1_RX_ADMA_FLEXCAN1_RX        0x06000060
@@ -620,14 +597,12 @@
 			>;
 		};
 		
-		// 
 		pinctrl_usdhc2_gpio: usdhc2gpiogrp {
 			fsl,pins = <
 				IMX8QXP_USDHC1_CD_B_LSIO_GPIO4_IO22         0x06000060
 			>;
 		};
 
-		// usdhc1 clk is set to pull down instead of no pull from the dts given to us, but I set it to no pull
 		pinctrl_usdhc2_sd: usdhc2sdgrp {
 			fsl,pins = <
 				IMX8QXP_USDHC1_CLK_CONN_USDHC1_CLK			0x06000040 
@@ -640,15 +615,7 @@
 			>;
 		};
 
-		// QSPI NOR Flash Reset
-		pinctrl_qspi_nor_reset: qspinorresetgrp {
-			fsl,pins = <
-				IMX8QXP_QSPI0A_SS0_B_LSIO_GPIO3_IO14        0x06000060
-			>;
-		};
-
-		// 1.8V ADC Breakout
-		pinctrl_adc: adcgrp {
+		pinctrl_adc0: adc0grp {
 			fsl,pins = <
 				IMX8QXP_ADC_IN0_ADMA_ADC_IN0                0x00000060
                 IMX8QXP_ADC_IN1_ADMA_ADC_IN1                0x00000060
@@ -658,121 +625,53 @@
 			>;
 		};
 
-		// EBYTE Transciever Board
-		pinctrl_ebyte: ebytegrp {
+		pinctrl_gpio0: gpio0grp {
 			fsl,pins = <
-				IMX8QXP_MIPI_DSI0_I2C0_SCL_LSIO_GPIO1_IO25  0x06000060
-                IMX8QXP_MIPI_DSI0_I2C0_SDA_LSIO_GPIO1_IO26  0x06000060
-				IMX8QXP_MIPI_DSI0_GPIO0_00_LSIO_GPIO1_IO27  0x06000060
-                IMX8QXP_MIPI_DSI0_GPIO0_01_LSIO_GPIO1_IO28  0x06000060
-				IMX8QXP_MIPI_DSI1_I2C0_SDA_LSIO_GPIO1_IO30  0x06000060
-			>;
-		};
-
-		// Preliminary Heater Trigger Connection
-		pinctrl_heater_trigger: heatertriggergrp {
-			fsl,pins = <
-				IMX8QXP_MIPI_DSI1_I2C0_SCL_LSIO_GPIO1_IO29  0x06000060
-				IMX8QXP_CSI_MCLK_LSIO_GPIO3_IO01            0x26000060
-			>;
-		};
-
-		// Payload Board Connection
-		pinctrl_payload: payloadgrp {
-			fsl,pins = <
-				IMX8QXP_FLEXCAN0_RX_LSIO_GPIO1_IO15         0x06000060
-                IMX8QXP_FLEXCAN0_TX_LSIO_GPIO1_IO16         0x26000060
-				IMX8QXP_USB_SS3_TC0_LSIO_GPIO4_IO03         0x06000060
-				IMX8QXP_USB_SS3_TC2_LSIO_GPIO4_IO05         0x06000060
-			>;
-		};
-		// Electrical Power System Management Board Connections
-		pinctrl_power_management: powermanaggrp {
-			fsl,pins = <
-				IMX8QXP_PCIE_CTRL0_CLKREQ_B_LSIO_GPIO4_IO01 0x06000060
-				IMX8QXP_PCIE_CTRL0_WAKE_B_LSIO_GPIO4_IO02   0x06000060
+				IMX8QXP_SCU_GPIO0_01_SCU_WDOG0_WDOG_OUT     0x06000060
 				IMX8QXP_MCLK_IN0_LSIO_GPIO0_IO19            0x06000060
                 IMX8QXP_MCLK_OUT0_LSIO_GPIO0_IO20           0x26000060
-			>;
-		};
-
-		// Preliminary ADCS Connection
-		pinctrl_adcs: adcsgrp {
-			fsl,pins = <
-				IMX8QXP_USDHC1_VSELECT_LSIO_GPIO4_IO20		0x06000021
-				IMX8QXP_USDHC1_WP_LSIO_GPIO4_IO21           0x06000060
 				IMX8QXP_SAI1_RXC_LSIO_GPIO0_IO30       		0x06000021
 				IMX8QXP_SAI1_RXFS_LSIO_GPIO0_IO31      		0x06000021
 			>;
 		};
 
-		// SATNOGS Load Switch
-		pinctrl_satnogs: satnogsgrp {
+		pinctrl_gpio1: gpio1grp {
 			fsl,pins = <
-				IMX8QXP_PCIE_CTRL0_PERST_B_LSIO_GPIO4_IO00  0x06000060
+				IMX8QXP_FLEXCAN0_RX_LSIO_GPIO1_IO15         0x06000060
+                IMX8QXP_FLEXCAN0_TX_LSIO_GPIO1_IO16         0x26000060
+				IMX8QXP_MIPI_DSI0_I2C0_SCL_LSIO_GPIO1_IO25  0x06000060
+                IMX8QXP_MIPI_DSI0_I2C0_SDA_LSIO_GPIO1_IO26  0x06000060
+				IMX8QXP_MIPI_DSI0_GPIO0_00_LSIO_GPIO1_IO27  0x06000060
+                IMX8QXP_MIPI_DSI0_GPIO0_01_LSIO_GPIO1_IO28  0x06000060
+				IMX8QXP_MIPI_DSI1_I2C0_SDA_LSIO_GPIO1_IO30  0x06000060
+				IMX8QXP_MIPI_DSI1_I2C0_SCL_LSIO_GPIO1_IO29  0x06000060
 			>;
 		};
 
-		// Shifted 3.3V Breakout Connector
-		pinctrl_breakout_connector: breakoutconnectgrp {
+		pinctrl_gpio3: gpio2grp {
 			fsl,pins = <
-				IMX8QXP_QSPI0B_SS0_B_LSIO_GPIO3_IO23        0x26000060
-                IMX8QXP_QSPI0B_SS1_B_LSIO_GPIO3_IO24        0x26000060
-				IMX8QXP_QSPI0B_SCLK_LSIO_GPIO3_IO17         0x26000060
-				IMX8QXP_QSPI0B_DQS_LSIO_GPIO3_IO22          0x06000060
+				IMX8QXP_CSI_MCLK_LSIO_GPIO3_IO01            0x26000060
 				IMX8QXP_MIPI_CSI0_MCLK_OUT_LSIO_GPIO3_IO04  0x26000060
 				IMX8QXP_MIPI_CSI0_I2C0_SCL_LSIO_GPIO3_IO05  0x06000060
-			>;
-		};
-
-		//Shifted 3.3V Imager Load Switch
-		pinctrl_imager_load: imagerloadgrp {
-			fsl,pins = <
 				IMX8QXP_MIPI_CSI0_I2C0_SDA_LSIO_GPIO3_IO06  0x06000060
-			>;
-		};
-
-		//Shifted ADCS Load Switch
-		pinctrl_adcs_load_switch: adcsloadswitchgrp {
-			fsl,pins = <
 				IMX8QXP_QSPI0A_DQS_LSIO_GPIO3_IO13          0x06000060
+				IMX8QXP_QSPI0A_SS0_B_LSIO_GPIO3_IO14        0x06000060
+				IMX8QXP_QSPI0B_SCLK_LSIO_GPIO3_IO17         0x26000060
+				IMX8QXP_QSPI0B_DQS_LSIO_GPIO3_IO22          0x06000060
+				IMX8QXP_QSPI0B_SS0_B_LSIO_GPIO3_IO23        0x26000060
+                IMX8QXP_QSPI0B_SS1_B_LSIO_GPIO3_IO24        0x26000060
 			>;
 		};
 
-		// QSPI Data Lines
-		pinctrl_qspidatalines: qspidatalinesgrp {
+		pinctrl_gpio4: gpio4grp {
 			fsl,pins = <
-				IMX8QXP_QSPI0A_DATA0_LSIO_QSPI0A_DATA0      0x06000060
-                IMX8QXP_QSPI0A_DATA1_LSIO_QSPI0A_DATA1      0x06000060
-                IMX8QXP_QSPI0A_DATA2_LSIO_QSPI0A_DATA2      0x06000060
-                IMX8QXP_QSPI0A_DATA3_LSIO_QSPI0A_DATA3      0x06000060
-				IMX8QXP_QSPI0B_DATA0_LSIO_QSPI0B_DATA0      0x06000060
-                IMX8QXP_QSPI0B_DATA1_LSIO_QSPI0B_DATA1      0x06000060
-                IMX8QXP_QSPI0B_DATA2_LSIO_QSPI0B_DATA2      0x06000060
-                IMX8QXP_QSPI0B_DATA3_LSIO_QSPI0B_DATA3      0x06000060
-			>;
-		};
-
-		// QSPI Select ad QSPI CLK
-		pinctrl_selectandclk: selectandclkgrp {
-			fsl,pins = <
-				IMX8QXP_QSPI0A_SCLK_LSIO_QSPI0A_SCLK        0x06000060
-                IMX8QXP_QSPI0A_SS1_B_LSIO_QSPI0A_SS1_B      0x06000060
-			>;
-		};
-
-		// Watchdog
-		pinctrl_watchdog: watchdoggrp {
-			fsl,pins = <
-				IMX8QXP_SCU_GPIO0_01_SCU_WDOG0_WDOG_OUT     0x06000060
-			>;
-		};
-
-		// M40 UART0 RX and TX (1.8V)
-		pinctrl_m40: m40grp {
-			fsl,pins = <
-				IMX8QXP_ADC_IN3_M40_UART0_TX                0x00000060
-				IMX8QXP_SCU_GPIO0_00_M40_UART0_RX           0x06000060
+				IMX8QXP_PCIE_CTRL0_PERST_B_LSIO_GPIO4_IO00  0x06000060
+				IMX8QXP_PCIE_CTRL0_CLKREQ_B_LSIO_GPIO4_IO01 0x06000060
+				IMX8QXP_PCIE_CTRL0_WAKE_B_LSIO_GPIO4_IO02   0x06000060
+				IMX8QXP_USB_SS3_TC0_LSIO_GPIO4_IO03         0x06000060
+				IMX8QXP_USB_SS3_TC2_LSIO_GPIO4_IO05         0x06000060
+				IMX8QXP_USDHC1_VSELECT_LSIO_GPIO4_IO20		0x06000021
+				IMX8QXP_USDHC1_WP_LSIO_GPIO4_IO21           0x06000060
 			>;
 		};
 	};
