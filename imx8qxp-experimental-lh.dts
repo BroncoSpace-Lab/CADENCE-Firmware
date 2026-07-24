@@ -73,7 +73,7 @@
 		reg = <0x1e>;
 	};
 
-	rtc@52 {
+	i2c_rtc: rtc@52 {
 		compatible = "microcrystal,rv3028";
 		reg = <0x52>;
 	};
@@ -103,6 +103,7 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_lpi2c1>;
 	status = "okay";
+
 };
 
 &i2c2 {
@@ -402,7 +403,7 @@
 &adc1 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_adc1>;
-	vref-supply = <&reg_adc_vref_1v8>;
+	vref-supply = <&reg_1p8v>;
 	status = "okay";
 };
 
