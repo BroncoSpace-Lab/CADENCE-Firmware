@@ -35,7 +35,6 @@
 		regulator-always-on;
 	};
 
-	
 	reg_5p0v: regulator-5p0v {
 		compatible = "regulator-fixed";
 		regulator-name = "5P0V";
@@ -51,7 +50,6 @@
 		regulator-max-microvolt = <12000000>;
 		regulator-always-on;
 	};
-
 };
 
 /************************ I2C *************************/
@@ -82,7 +80,7 @@
 		compatible = "ti,tmp112";
 		reg = <0x48>;
 	};
-	
+
 	power_monitor@40 {
 		compatible = "ti,ina219";
 		reg = <0x40>;
@@ -103,7 +101,6 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_lpi2c1>;
 	status = "okay";
-
 };
 
 &i2c2 {
@@ -417,13 +414,13 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_gpio0>;
 
-	gpio-line-names = 
+	gpio-line-names =
 		/* 0-7 */
 		"", "", "", "", "", "", "", "",
 		/* 8-15 */
 		"", "", "", "", "", "", "", "",
 		/* 16-18 */
-		"", "", "", 
+		"", "", "",
 		/* 19-20: named */
 		"cadence0_gpio19", "cadence0_gpio20",
 		/* 21-23 */
@@ -431,14 +428,14 @@
 		/* 24-29 */
 		"", "", "", "", "", "",
 		/* 30-31: named */
-		"cadence0_gpio30", "cadence0_gpio31",
+		"cadence0_gpio30", "cadence0_gpio31";
 };
 
 &lsio_gpio1 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_gpio1>;
 
-	gpio-line-names = 
+	gpio-line-names =
 		/* 0-7 */
 		"", "", "", "", "", "", "", "",
 		/* 8-14 */
@@ -448,11 +445,11 @@
 		/* 17-24 */
 		"", "", "", "", "", "", "", "",
 		/* 25-26: named */
-		"cadence1_gpio25", "cadence1_gpio26", 
+		"cadence1_gpio25", "cadence1_gpio26",
 		/* 27-28: named */
-		"cadence1_gpio27", "cadence1_gpio28", 
+		"cadence1_gpio27", "cadence1_gpio28",
 		/* 29-30: named */
-		"cadence1_gpio29", "cadence1_gpio30", 
+		"cadence1_gpio29", "cadence1_gpio30",
 		/* 31 */
 		"";
 };
@@ -461,29 +458,29 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_gpio3>;
 
-	gpio-line-names = 
+	gpio-line-names =
 		/* 0 */
-		"", 
+		"",
 		/* 1: named */
-		"cadence3_gpio1", 
+		"cadence3_gpio1",
 		/* 2-3 */
-		"", "", 
+		"", "",
 		/* 4-6: named */
-		"cadence3_gpio4", "cadence3_gpio5", "cadence3_gpio6", 
+		"cadence3_gpio4", "cadence3_gpio5", "cadence3_gpio6",
 		/* 7-12 */
-		"", "", "", "", "", "", 
+		"", "", "", "", "", "",
 		/* 13-14: named */
-		"cadence3_gpio13", "cadence3_gpio14", 
+		"cadence3_gpio13", "cadence3_gpio14",
 		/* 15-16 */
-		"", "", 
+		"", "",
 		/* 17: named */
-		"cadence3_gpio17", 
+		"cadence3_gpio17",
 		/* 18-21 */
-		"", "", "", "", 
+		"", "", "", "",
 		/* 22-23: named */
 		"cadence3_gpio22", "cadence3_gpio23",
 		/* 24: named */
-		"cadence3_gpio24", 
+		"cadence3_gpio24",
 		/* 25-31 */
 		"", "", "", "", "", "", "";
 };
@@ -492,23 +489,23 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_gpio4>;
 
-	gpio-line-names = 
+	gpio-line-names =
 		/* 0-1: named */
-		"cadence4_gpio0", "cadence4_gpio1", 
+		"cadence4_gpio0", "cadence4_gpio1",
 		/* 2-3: named */
-		"cadence4_gpio2", "cadence4_gpio3", 
+		"cadence4_gpio2", "cadence4_gpio3",
 		/* 4 */
-		"", 
+		"",
 		/* 5: named */
-		"cadence4_gpio5", 
+		"cadence4_gpio5",
 		/* 6-12 */
-		"", "", "", "", "", "", "", 
+		"", "", "", "", "", "", "",
 		/* 13-19 */
-		"", "", "", "", "", "", "", 
+		"", "", "", "", "", "", "",
 		/* 20-21: named */
-		"cadence4_gpio20", "cadence4_gpio21", 
+		"cadence4_gpio20", "cadence4_gpio21",
 		/* 22-28 */
-		"", "", "", "", "", "", "", 
+		"", "", "", "", "", "", "",
 		/* 29-31 */
 		"", "", "";
 };
@@ -520,7 +517,6 @@
 	pcm942 {
 		pinctrl_hog: hoggrp {
 			fsl,pins = <
-				
 			>;
 		};
 
@@ -591,7 +587,7 @@
 		};
 
 		pinctrl_lpspi2: lpspi2grp {
-			fsl,pins = < 
+			fsl,pins = <
 				IMX8QXP_SPI2_CS0_ADMA_SPI2_CS0              0x06000020		/* NAND Flash */
 				IMX8QXP_SAI0_TXFS_ADMA_SPI2_CS1             0x06000020		/* Breakout */
 				IMX8QXP_SPI2_SCK_ADMA_SPI2_SCK              0x06000060
@@ -658,7 +654,7 @@
 				IMX8QXP_FLEXCAN1_TX_ADMA_FLEXCAN1_TX        0x06000060
 			>;
 		};
-		
+
 		pinctrl_usdhc2_gpio: usdhc2gpiogrp {
 			fsl,pins = <
 				IMX8QXP_USDHC1_CD_B_LSIO_GPIO4_IO22         0x06000060
@@ -667,7 +663,7 @@
 
 		pinctrl_usdhc2_sd: usdhc2sdgrp {
 			fsl,pins = <
-				IMX8QXP_USDHC1_CLK_CONN_USDHC1_CLK			0x06000040 
+				IMX8QXP_USDHC1_CLK_CONN_USDHC1_CLK			0x06000040
 				IMX8QXP_USDHC1_CMD_CONN_USDHC1_CMD			0x06000060
 				IMX8QXP_USDHC1_DATA0_CONN_USDHC1_DATA0		0x06000060
 				IMX8QXP_USDHC1_DATA1_CONN_USDHC1_DATA1		0x06000060
