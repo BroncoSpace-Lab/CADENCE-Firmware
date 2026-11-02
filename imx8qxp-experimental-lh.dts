@@ -404,9 +404,9 @@
 	status = "okay";
 };
 
-&cm4_0 {
+&cm40_lpuartm" {
 	pinctrl-names = "default";
-	pinctrl-0 = <pinctrl_m40_uart>;
+	pinctrl-0 = <&pinctrl_m40_uart>;
 	status = "okay";
 };
 
